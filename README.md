@@ -52,4 +52,4 @@ Visit the live demo of The Messy at: [https://themessy.vercel.app/](https://them
 
 **Owner:** Yash Khandelwal
 
-You can reach me via [your_email@example.com](mailto:your_email@example.com) (Replace with your actual email address) or through [your_linkedin_profile](your_linkedin_profile) (Replace with your LinkedIn profile URL).  Feel free to reach out with any questions or feedback!
+You can reach me via [ykhandelwal571@gmail.com](mailto:ykhandelwal571@gmail.com) (Replace with your actual email address) or through [your_linkedin_profile](your_linkedin_profile) (Replace with your LinkedIn profile URL).  Feel free to reach out with any questions or feedback!
