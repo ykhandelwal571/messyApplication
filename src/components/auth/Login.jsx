@@ -15,28 +15,28 @@ const Login = ({ onLogin }) => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    setError(""); // Clear error when user makes changes
+    setError("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.username.trim() || !formData.password.trim()) {
       setError("Please fill in all fields");
       return;
     }
 
-    // You can add more validation here
-
-    // Call the onLogin function with user data
     onLogin(formData.userType, formData.username);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-yellow-50 to-red-50">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        {/* Logo/Title Section */}
+    <div
+      className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center"
+      style={{
+        backgroundImage: `url('https://images.pexels.com/photos/628233/pexels-photo-628233.jpeg')`,
+      }}
+    >
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg bg-opacity-65 backdrop-blur-sm">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-red-700">
             The Messy Application
@@ -45,10 +45,7 @@ const Login = ({ onLogin }) => {
             Welcome back! Please enter your details.
           </p>
         </div>
-
-        {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* User Type Selection */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Login As
@@ -88,8 +85,6 @@ const Login = ({ onLogin }) => {
               </button>
             </div>
           </div>
-
-          {/* Username Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Username
@@ -103,8 +98,6 @@ const Login = ({ onLogin }) => {
               placeholder="Enter your username"
             />
           </div>
-
-          {/* Password Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Password
@@ -121,8 +114,8 @@ const Login = ({ onLogin }) => {
               <button
                 type="button"
                 onClick={(e) => {
-                  e.preventDefault(); // Prevent form submission
-                  setShowPassword(!showPassword); // Toggle password visibility
+                  e.preventDefault();
+                  setShowPassword(!showPassword);
                 }}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
               >
@@ -130,11 +123,7 @@ const Login = ({ onLogin }) => {
               </button>
             </div>
           </div>
-
-          {/* Error Message */}
           {error && <div className="text-red-600 text-sm">{error}</div>}
-
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors duration-200"
@@ -142,8 +131,6 @@ const Login = ({ onLogin }) => {
             Sign In
           </button>
         </form>
-
-        {/* Additional Links */}
         <div className="mt-6 text-center text-sm">
           <a href="#" className="text-red-600 hover:text-red-700">
             Forgot password?
