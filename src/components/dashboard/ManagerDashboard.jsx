@@ -9,47 +9,30 @@ const ManagerDashboard = ({ onLogout }) => {
   const [activeTab, setActiveTab] = useState("overview");
   const [menu, setMenu] = useState({ breakfast: "", lunch: "", dinner: "" });
 
-  // Student Data
   const allStudents = [
-    "John Doe",
-    "Jane Smith",
-    "Michael Brown",
-    "Emily Davis",
-    "Chris Johnson",
-    "Sarah Wilson",
+    "Yash Khandelwal",
+    "Vansh Vishal",
+    "Md Ali",
+    "Divyansh Tyagi",
   ];
   const studentsPresent = [
-    "John Doe",
-    "Jane Smith",
-    "Michael Brown",
-    "Emily Davis",
+    "Vansh Vishal",
+    "Md Ali",
   ];
 
-  // Calculate Absent Students
   const absentStudents = allStudents.filter(
     (student) => !studentsPresent.includes(student)
   );
 
-  // // Random student list
-  // const studentsPresent = [
-  //   "John Doe",
-  //   "Jane Smith",
-  //   "Michael Brown",
-  //   "Emily Davis",
-  //   "Chris Johnson",
-  // ];
-
-  // Random feedback data
   const feedbackData = [
-    { student: "John Doe", comment: "The food today was excellent!" },
+    { student: "Yash Khandelwal", comment: "The food today was excellent!" },
     {
-      student: "Jane Smith",
+      student: "Vansh Vishal",
       comment: "Lunch was a bit salty, but breakfast was good.",
     },
-    { student: "Michael Brown", comment: "Great menu this week!" },
+    { student: "Ali Ahmad", comment: "Great menu this week!" },
   ];
 
-  // Stats Data
   const statsData = {
     totalPresent: studentsPresent.length,
     totalStudents: 50,
@@ -58,14 +41,12 @@ const ManagerDashboard = ({ onLogout }) => {
   };
 
   const handleSubmitMenu = () => {
-    // Here you can send the menu to the server or handle submission
     alert(`Menu Submitted:
     Breakfast: ${menu.breakfast}
     Lunch: ${menu.lunch}
     Dinner: ${menu.dinner}`);
   };
 
-  // StatCard Component
   const StatCard = ({ title, value, icon: Icon, trend }) => (
     <Card className="border-red-200">
       <CardContent className="p-4">
@@ -89,7 +70,6 @@ const ManagerDashboard = ({ onLogout }) => {
     </Card>
   );
 
-  // Menu Change Handler
   const handleMenuChange = (meal, value) => {
     setMenu((prevMenu) => ({
       ...prevMenu,
@@ -100,7 +80,6 @@ const ManagerDashboard = ({ onLogout }) => {
   return (
     <MainLayout userType="manager" onLogout={onLogout}>
       <div className="space-y-6">
-        {/* Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <StatCard
             title="Today's Attendance"
@@ -122,7 +101,6 @@ const ManagerDashboard = ({ onLogout }) => {
           />
         </div>
 
-        {/* Tabs Section */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="w-full bg-red-100 p-1 rounded-lg">
             <TabsTrigger
@@ -145,12 +123,9 @@ const ManagerDashboard = ({ onLogout }) => {
             </TabsTrigger>
           </TabsList>
 
-          {/* Overview Tab Content */}
-          {/* Overview Tab Content */}
           <TabsContent value="overview">
             <div className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Present Students Card */}
                 <Card className="border-green-100 bg-green-50">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
@@ -173,7 +148,6 @@ const ManagerDashboard = ({ onLogout }) => {
                       </div>
                     </div>
 
-                    {/* Progress Bar */}
                     <div className="w-full bg-green-100 rounded-full h-2.5 mb-4">
                       <div
                         className="bg-green-600 h-2.5 rounded-full transition-all duration-500"
@@ -199,7 +173,6 @@ const ManagerDashboard = ({ onLogout }) => {
                   </CardContent>
                 </Card>
 
-                {/* Absent Students Card */}
                 <Card className="border-red-100 bg-red-50">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
@@ -222,7 +195,6 @@ const ManagerDashboard = ({ onLogout }) => {
                       </div>
                     </div>
 
-                    {/* Progress Bar */}
                     <div className="w-full bg-red-100 rounded-full h-2.5 mb-4">
                       <div
                         className="bg-red-600 h-2.5 rounded-full transition-all duration-500"
@@ -249,7 +221,6 @@ const ManagerDashboard = ({ onLogout }) => {
                 </Card>
               </div>
 
-              {/* Summary Stats */}
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div className="p-4 bg-green-50 rounded-lg">
                   <div className="text-2xl font-bold text-green-700">
@@ -269,13 +240,11 @@ const ManagerDashboard = ({ onLogout }) => {
             </div>
           </TabsContent>
 
-          {/* Menu Tab Content */}
           <TabsContent value="menu">
             <h3 className="text-lg font-bold text-red-700">
               Create Menu for the Day
             </h3>
             <div className="space-y-4">
-              {/* Breakfast */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Breakfast
@@ -291,7 +260,6 @@ const ManagerDashboard = ({ onLogout }) => {
                 />
               </div>
 
-              {/* Lunch */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Lunch
@@ -305,7 +273,6 @@ const ManagerDashboard = ({ onLogout }) => {
                 />
               </div>
 
-              {/* Dinner */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Dinner
@@ -319,7 +286,6 @@ const ManagerDashboard = ({ onLogout }) => {
                 />
               </div>
 
-              {/* Submit Button */}
               <button
                 onClick={() => handleSubmitMenu()}
                 className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors duration-200"
@@ -329,7 +295,6 @@ const ManagerDashboard = ({ onLogout }) => {
             </div>
           </TabsContent>
 
-          {/* Feedback Tab Content */}
           <TabsContent value="feedback">
             <h3 className="text-lg font-bold text-red-700">Feedbacks</h3>
             <div className="space-y-4">
@@ -343,7 +308,6 @@ const ManagerDashboard = ({ onLogout }) => {
           </TabsContent>
         </Tabs>
 
-        {/* Quick Actions Panel */}
         <div className="fixed bottom-4 right-4 space-x-2">
           <button className="bg-red-600 text-white p-3 rounded-full shadow-lg hover:bg-red-700">
             <MessageSquare className="w-5 h-5" />
