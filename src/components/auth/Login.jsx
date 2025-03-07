@@ -4,11 +4,13 @@ import { Eye, EyeOff } from "lucide-react";
 const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     username: "",
+    email: "", // ✅ Added email field for sign-up
     password: "",
     userType: "customer",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false); // ✅ Toggle between Login & SignUp
 
   const handleChange = (e) => {
     setFormData({
@@ -18,7 +20,7 @@ const Login = ({ onLogin }) => {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.username.trim() || !formData.password.trim()) {
@@ -26,7 +28,40 @@ const Login = ({ onLogin }) => {
       return;
     }
 
-    onLogin(formData.userType, formData.username);
+    if (isSignUp && !formData.email.trim()) {
+      setError("Please enter your email for registration");
+      return;
+    }
+
+    try {
+      const endpoint = isSignUp ? "register" : "login"; // ✅ Dynamically select API
+      const payload = isSignUp
+        ? { username: formData.username, email: formData.email, password: formData.password, userType: formData.userType }
+        : { username: formData.username, password: formData.password, userType: formData.userType };
+
+      const response = await fetch(`http://localhost:3000/${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        setError(data.message);
+      } else {
+        alert(data.message);
+        if (!isSignUp) {
+          onLogin(data.userType, formData.username);
+        } else {
+          setIsSignUp(false); // ✅ Switch to login after successful signup
+          setFormData({ username: "", email: "", password: "", userType: "customer" });
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -42,7 +77,7 @@ const Login = ({ onLogin }) => {
             The Messy Application
           </h2>
           <p className="text-gray-600 mt-2">
-            Welcome back! Please enter your details.
+            {isSignUp ? "Create an account" : "Welcome back! Please enter your details."}
           </p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -54,9 +89,7 @@ const Login = ({ onLogin }) => {
               <button
                 type="button"
                 onClick={() =>
-                  handleChange({
-                    target: { name: "userType", value: "customer" },
-                  })
+                  setFormData((prev) => ({ ...prev, userType: "customer" }))
                 }
                 className={`p-3 text-center rounded-lg border transition-colors
                   ${
@@ -70,9 +103,7 @@ const Login = ({ onLogin }) => {
               <button
                 type="button"
                 onClick={() =>
-                  handleChange({
-                    target: { name: "userType", value: "manager" },
-                  })
+                  setFormData((prev) => ({ ...prev, userType: "manager" }))
                 }
                 className={`p-3 text-center rounded-lg border transition-colors
                   ${
@@ -98,6 +129,21 @@ const Login = ({ onLogin }) => {
               placeholder="Enter your username"
             />
           </div>
+          {isSignUp && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                placeholder="Enter your email"
+              />
+            </div>
+          )}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Password
@@ -113,10 +159,7 @@ const Login = ({ onLogin }) => {
               />
               <button
                 type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowPassword(!showPassword);
-                }}
+                onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
               >
                 {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
@@ -124,17 +167,14 @@ const Login = ({ onLogin }) => {
             </div>
           </div>
           {error && <div className="text-red-600 text-sm">{error}</div>}
-          <button
-            type="submit"
-            className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors duration-200"
-          >
-            Sign In
+          <button type="submit" className="w-full bg-red-600 text-white py-3 rounded-lg">
+            {isSignUp ? "Sign Up" : "Sign In"}
           </button>
         </form>
         <div className="mt-6 text-center text-sm">
-          <a href="#" className="text-red-600 hover:text-red-700">
-            Forgot password?
-          </a>
+          <button onClick={() => setIsSignUp(!isSignUp)} className="text-red-600">
+            {isSignUp ? "Already have an account? Login" : "Create an account"}
+          </button>
         </div>
       </div>
     </div>

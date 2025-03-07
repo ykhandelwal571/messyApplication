@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useState } from 'react';
 import ManagerDashboard from './components/dashboard/ManagerDashboard';
 import CustomerDashboard from './components/dashboard/CustomerDashboard';
